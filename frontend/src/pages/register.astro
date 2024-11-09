@@ -1,0 +1,81 @@
+<div class="signup">
+
+  <h1>SignUp</h1>
+    <form class="singnup-form">
+      <label>
+        <span>Firstname:</span>
+        <input type="text" name="firstname" autocomplete="off" id="firstname" required>
+      </label>
+      <label>
+        <span>Lastname:</span>
+        <input type="text" name="lastname" autocomplete="off" id="lastname" required>
+      </label>
+      <label>
+        <span>Username:</span>
+        <input type="text" name="username" autocomplete="off" id="username" required>
+      </label>
+      <label>
+        <span>Password:</span>
+        <input type="password" name="password" required>
+      </label>
+      <button type="submit">Sign Up</button>
+    </form>
+</div>
+<style>
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  button {
+    width:100px;
+  }
+</style>
+<script>
+  const form = document.querySelector('.login-form') as HTMLFormElement;
+
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  // 入力フィールドを取得
+  const firstnameElement = document.getElementById('firstname') as HTMLInputElement;
+  const lastnameElement = document.getElementById('lastname') as HTMLInputElement;
+  const usernameElement = document.getElementById('username') as HTMLInputElement;
+  const passwordElement = document.querySelector('input[name="password"]') as HTMLInputElement;
+
+  const firstname = firstnameElement ? firstnameElement.value : '';
+  const lastname = lastnameElement ? lastnameElement.value : '';
+  const username = usernameElement ? usernameElement.value : '';
+  const password = passwordElement ? passwordElement.value : '';
+
+  if (!firstname || !lastname || !username || !password) {
+    console.error('All fields are required!');
+    return;
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/users/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        username,
+        password
+      }),
+    });
+
+    if (response.ok) {
+      console.log('User registered successfully!');
+    } else {
+      const errorData = await response.json();
+      console.error('Error:', errorData.message);
+    }
+  } catch (error) {
+    console.error('Network error:', error);
+  }
+});
+
+</script>
+

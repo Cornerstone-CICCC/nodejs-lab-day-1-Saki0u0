@@ -10,8 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.16.10",
     "@astrojs/check": "^0.9.4",
+    "astro": "^4.16.10",
+    "concurrently": "^9.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "typescript": "^5.6.3"
   }
 }
